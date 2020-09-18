@@ -9,6 +9,7 @@ import dgram from 'react-native-udp';
 import styles from '../src/styles';
 import database from '../src/database';
 
+// Contém os dados sobre a temperatura que devem ser plotados
 let data_plot_temperature = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [
@@ -34,6 +35,7 @@ let data_plot_temperature = {
     legend: ["Temperatura", "Temperatura Ref"], // optional
 };
 
+// Contém os dados sobre a umidade que devem ser plotados
 let data_plot_humidity = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [
@@ -78,8 +80,8 @@ let data_plot_humidity = {
     legend: ["Umidade", "Umidade Ref"] // optional
 };
 
-let data_realm = null;
-let check_data_realm = '0';
+let data = null;
+let check_data = '0';
 let data_humidity = ["0", "0", "0", "0"];
 let data_temperature = ["0", "0", "0", "0"];
 let receive_array = [];
@@ -89,6 +91,7 @@ let humidity = "-";
 let status = false;
 const screenWidth = Dimensions.get("window").width;
 
+// Configurações para o react-native-chart-kit
 const chartConfig = {
     backgroundGradientFrom: "rgba(255, 255, 255, 0)",
     backgroundGradientFromOpacity: 0.25,
@@ -107,6 +110,7 @@ const chartConfig = {
       },
   };
 
+// Gera uma porta aleatória para o receptor
 function randomPort() {
     return (Math.random() * 60536) | (0 + 5000); // 60536-65536
 }
@@ -119,7 +123,8 @@ function toByteArray(obj) {
 
     return new Uint8Array(uint);
 }
-  
+
+// Connecta e adquire dados do servidor UDP
 function connect() {
     let a = dgram.createSocket('udp4');
     let aPort = randomPort();
@@ -155,6 +160,7 @@ function connect() {
     });
 }
 
+// Mantém o gráfico gerado com 4 valores
 function addToCircleArray(value, array) {
     for (let i=0; i < array.length; i++) {
         array[i] = array[i+1]
@@ -172,10 +178,12 @@ function refConfiguration(data, pos) {
 
 class App extends Component {
 
+    // State para o botão HELP
     openHelp = (show) => {
         this.setState({ showHelp: show });
     }
 
+    // State para o botão INFO
     openInfo = (show) => {
         this.setState({ showInfo: show });
     }
@@ -188,12 +196,14 @@ class App extends Component {
         }
     }
 
+    // A cada 5 segundos checa se o programa precisa ser remontado 
     componentDidMount() {
         this.myInterval = setInterval(() => {
             this.setState({number: global.state});
         }, 5000);
     }
 
+    // Aplica as mudanças e remonta a aplicação
     shouldComponentUpdate() {
         connect();
         console.log(receive);
@@ -210,19 +220,19 @@ class App extends Component {
                 data_plot_temperature.datasets[0].data = data_temperature
                 data_plot_humidity.datasets[0].data = data_humidity
             }
-            if (this.state.pickerSelection != check_data_realm) {
+            if (this.state.pickerSelection != check_data) {
                 if (this.state.pickerSelection != '0') {
-                    data_realm = database[parseInt(this.state.pickerSelection)];
-                    data_plot_temperature.datasets[1].data = refConfiguration(data_realm, 2);
-                    check_data_realm = this.state.pickerSelection;
+                    data = database[parseInt(this.state.pickerSelection)];
+                    data_plot_temperature.datasets[1].data = refConfiguration(data, 2);
+                    data = this.state.pickerSelection;
                 } else {
-                    data_realm = ['0', '0', '0', '0'];
-                    data_plot_temperature.datasets[1].data = refConfiguration(data_realm, 2);
-                    check_data_realm = this.state.pickerSelection;
+                    data = ['0', '0', '0', '0'];
+                    data_plot_temperature.datasets[1].data = refConfiguration(data, 2);
+                    check_data = this.state.pickerSelection;
                 }
-                console.log("Adquirido do banco de dados: ", data_realm);
+                console.log("Adquirido: ", data);
             } else {
-                data_realm = null;
+                data = null;
             }
             return true;
         } else {
@@ -242,6 +252,7 @@ class App extends Component {
 
     render() {
         return (
+            // Aplica o efeito gradiente como cor de fundo da aplicação
             <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 1}} colors={['#398E3C', '#337085']} style={styles.container}>
             {/* Header */}
                 <View>
