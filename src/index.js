@@ -153,7 +153,7 @@ function connect() {
     b.once('listening', function() {
         var str = "request_data";
         var msg = toByteArray(str);
-        a.send(msg, 0, msg.length, 8888, '192.168.15.6', function(err) {
+        a.send(msg, 0, msg.length, 8888, '255.255.255.255', function(err) {
         if (err) throw err;
         console.log('a sent data ', str);
         });
