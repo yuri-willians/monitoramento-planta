@@ -1,4 +1,4 @@
-Este sistema foi implementado como atividade final da disciplina de Linguagem de Programação 3.
+Este sistema foi implementado utilizando React Native.
 
 Para rodar essa aplicação, siga os passos deste tutorial: https://react-native.rocketseat.dev
 
