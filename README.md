@@ -20,6 +20,12 @@ ou
 yarn start
 ```
 
+Diagramas:
+
+![Diagrama Esquemático](https://github.com/ShieldOfDead/monitoramento-planta/blob/master/Diagrama%20esquemático.jpeg)
+
+![Diagrama Servidor UDP](https://github.com/ShieldOfDead/monitoramento-planta/blob/master/Diagrama%20servidor%20UDP.png)
+
 Imagens:
 
 https://prntscr.com/1qthd5a
