@@ -19,3 +19,10 @@ ou
 ```
 yarn start
 ```
+Imagens:
+
+![alt text](https://prntscr.com/1qthd5a)
+![alt text](https://prntscr.com/1qthcyw)
+![alt text](https://prntscr.com/1qthcu0)
+![alt text](https://prntscr.com/1qthcs9)
+![alt text](https://prntscr.com/1qthcy5)
