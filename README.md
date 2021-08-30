@@ -19,6 +19,13 @@ ou
 ```
 yarn start
 ```
+
+Diagramas:
+
+![Diagrama Esquemático](/Diagrama esquemático.jpeg)
+
+![Diagrama servidor UDP.png](/Diagrama servidor UDP.png)
+
 Imagens:
 
 https://prntscr.com/1qthd5a
